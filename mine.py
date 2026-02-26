@@ -30,5 +30,9 @@ def promotion_image():
 def astronaut_selection():
     return render_template("astronaut_selection.html", title="Отбор астронавтов")
 
+@app.route("/training/<prof>")
+def training(prof):
+    return render_template("training.html", prof=prof)
+
 if __name__ == "__main__":
     app.run("127.0.0.1", 8080)
