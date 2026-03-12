@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, orm
 
-# from .db_session import SqlAlchemyBase
+from .db_session import SqlAlchemyBase
 
 
 class User(SqlAlchemyBase):
@@ -16,3 +16,5 @@ class User(SqlAlchemyBase):
     email = Column(String, unique=True)
     hashed_password = Column(String)
     modified_date = Column(DateTime)
+
+    jobs = orm.relationship("Jobs", back_populates="user")
