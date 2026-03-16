@@ -1,5 +1,8 @@
 from flask import Flask, render_template, redirect
 
+from data.db_session import create_session
+from data.user import User, Jobs
+from queries.queries2 import result
 from static.form.login_form import LoginForm
 
 from data import db_session
@@ -9,16 +12,18 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "password123"
 
 
-
-
-
 @app.route("/")
 def main():
     return "Миссия Колонизация Марса"
 
 @app.route("/index")
 def index():
-    return render_template("base.html", title="Заготовка")
+    session = create_session()
+    result = session.query(Jobs, User).join(
+        User,
+        Jobs.team_leader == User.id
+    )
+    return render_template("index.html", title="Главная страница", result=result)
 
 @app.route("/promotion")
 def promotion():
