@@ -4,7 +4,7 @@ from .db_session import SqlAlchemyBase
 
 
 class Jobs(SqlAlchemyBase):
-    __tablename__ = "jobs   "
+    __tablename__ = "jobs"
 
     id = Column(Integer, primary_key=True)
     team_leader = Column(Integer, ForeignKey("users.id"))
