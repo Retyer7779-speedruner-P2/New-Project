@@ -6,7 +6,7 @@ from .db_session import SqlAlchemyBase
 class Jobs(SqlAlchemyBase):
     __tablename__ = "jobs"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     team_leader = Column(Integer, ForeignKey("users.id"))
     user = orm.relationship("User")
     job = Column(String)

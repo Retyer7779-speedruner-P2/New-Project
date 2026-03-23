@@ -2,9 +2,10 @@ from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_user, login_required, logout_user
 
 from data.db_session import create_session
-from data.user import User, Jobs
-from queries.queries2 import result
-from static.form.login_form import LoginForm
+from data.jobs import Jobs
+from data.user import User
+from form.jobs_form import JobsForm
+from form.login_form import LoginForm
 
 from data import db_session
 
@@ -16,7 +17,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-@login_manager.user_loader()
+@login_manager.user_loader
 def user_loader(user_id):
     session = db_session.create_session()
     return session.get(User, user_id)
@@ -96,6 +97,13 @@ def login():
 def logout():
     logout_user()
     return redirect("/")
+
+@app.route("/addjob", methods=["GET", "POST"])
+def addjob():
+    jobs_form = JobsForm()
+    if jobs_form.validate_on_submit():
+        pass
+    return render_template("addjob.html", form=jobs_form, title="Adding a job")
 
 
 if __name__ == "__main__":
