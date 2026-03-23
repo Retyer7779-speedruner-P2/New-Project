@@ -47,7 +47,7 @@ ktoto2 = User(
     position="ktoto2",
     speciality="okeey",
     address="module_4",
-    email="cant_even@mars.org"
+    email="msushi@mars.org"
 )
 
 session.add(ktoto2)

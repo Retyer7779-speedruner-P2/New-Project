@@ -24,9 +24,6 @@ def user_loader(user_id):
 
 
 @app.route("/")
-def main():
-    return "Миссия Колонизация Марса"
-
 @app.route("/index")
 def index():
     session = create_session()
@@ -81,8 +78,7 @@ def login():
     if login_form.validate_on_submit():
         session = db_session.create_session()
         user = session.query(User).filter(
-            User.email == login_form.email.data,
-            User.hashed_password == login_form.password
+            User.email == login_form.email.data
         ).first()
         if user and user.check_password(login_form.password.data):
             login_user(user, login_form.remember_me)
@@ -99,10 +95,22 @@ def logout():
     return redirect("/")
 
 @app.route("/addjob", methods=["GET", "POST"])
+@login_required
 def addjob():
     jobs_form = JobsForm()
     if jobs_form.validate_on_submit():
-        pass
+        session = db_session.create_session()
+        first_job = Jobs(
+            job=jobs_form.job.data,
+            team_leader=jobs_form.team_leader.data,
+            work_size=jobs_form.work_size.data,
+            collaborators=jobs_form.collaborators.data,
+            is_finished=jobs_form.is_finished.data
+        )
+
+        session.add(first_job)
+        session.commit()
+        return redirect("/")
     return render_template("addjob.html", form=jobs_form, title="Adding a job")
 
 

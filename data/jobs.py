@@ -10,7 +10,7 @@ class Jobs(SqlAlchemyBase):
     team_leader = Column(Integer, ForeignKey("users.id"))
     user = orm.relationship("User")
     job = Column(String)
-    work_size = Column(String)
+    work_size = Column(Integer)
     collaborators = Column(String)
     start_date = Column(DateTime)
     end_date = Column(DateTime)
