@@ -8,8 +8,10 @@ from form.jobs_form import JobsForm
 from form.login_form import LoginForm
 
 from data import db_session
+from api import api
 
 app = Flask(__name__)
+app.register_blueprint(api)
 
 app.config["SECRET_KEY"] = "password123"
 
